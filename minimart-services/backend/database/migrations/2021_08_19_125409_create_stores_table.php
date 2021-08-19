@@ -14,7 +14,7 @@ class CreateStoresTable extends Migration
     public function up()
     {
         Schema::create('stores', function (Blueprint $table) {
-            $table->integer('id')->primary();
+            $table->integer('id', true);
             $table->string('name')->nullable()->comment('ชื่อร้านค้า');
             $table->text('description')->nullable()->comment('คำอธิบายร้านค้า');
             $table->string('phone_number', 20)->nullable()->comment('เบอร์ติดต่อร้านค้า');

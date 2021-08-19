@@ -14,7 +14,7 @@ class CreateCategoriesTable extends Migration
     public function up()
     {
         Schema::create('categories', function (Blueprint $table) {
-            $table->integer('id')->primary();
+            $table->integer('id', true);
             $table->string('name')->nullable()->comment('ชื่อหมวดหมู่');
             $table->text('description')->nullable()->comment('คำอธิบายหมวดหมู่สินค้า');
             $table->dateTime('create_at')->nullable();
