@@ -20,9 +20,9 @@ class StoreController extends Controller
     public function index()
     {
         return StoreResource::collection(
-            Store::orderBy('name', 'asc')
-                ->limit(10)
-                ->paginate(10)
+            Store::orderBy('created_at', 'desc')->get()
+            // ->limit(2)
+            // ->paginate(2)
         );
     }
 
@@ -35,31 +35,41 @@ class StoreController extends Controller
     public function store(Request $request)
     {
 
-        // $validateRules = [
-        //     'name' => 'required|string|max:255',
-        // ];
+        $validateRules = [
+            'name' => 'required|string|max:255',
+            'description' => 'required|string|max:65535',
+            'phone_number' => 'required|string|max:20',
+            'address' => 'required|string|max:255',
+        ];
 
-        // $validateMessages = [
-        //     'name.required' =>  ':attribute จำเป็นต้องกรอก',
-        //     'name.required' =>  ':attribute จำเป็นต้องกรอก',
-        // ];
+        $validateMessages = [
+            'name.required' =>  ':attribute จำเป็นต้องกรอก',
+            'description.required' =>  ':attribute จำเป็นต้องกรอก',
+            'phone_number.required' =>  ':attribute จำเป็นต้องกรอก',
+            'address.required' =>  ':attribute จำเป็นต้องกรอก',
 
-        // $attributesName = [
-        //     'name' => 'ชื่อร้านค้า',
-        //     'description' => 'คำอธิบายร้านค้า',
-        //     'phone_number' => 'เบอร์ติดต่อร้านค้า',
-        //     'address' => 'ที่อยู่',
-        // ];
+            'name.max' =>  ':attribute ต้องไม่เกิน :max ตัวอักษร',
+            'description.max' =>  ':attribute ต้องไม่เกิน :max ตัวอักษร',
+            'phone_number.max' =>  ':attribute ต้องไม่เกิน :max ตัวอักษร',
+            'address.max' =>  ':attribute ต้องไม่เกิน :max ตัวอักษร',
+        ];
 
-        // $validator = Validator::make($request->all(), $validateRules, $validateMessages, $attributesName);
+        $attributesName = [
+            'name' => 'ชื่อร้านค้า',
+            'description' => 'คำอธิบายร้านค้า',
+            'phone_number' => 'เบอร์ติดต่อร้านค้า',
+            'address' => 'ที่อยู่',
+        ];
 
-        // if ($validator->fails()) {
-        //     return response()->json([
-        //         'status' => 400,
-        //         'message' => $validator->messages(),
-        //         'data' => null,
-        //     ], 400);
-        // }
+        $validator = Validator::make($request->all(), $validateRules, $validateMessages, $attributesName);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 400,
+                'message' => $validator->messages(),
+                'data' => null,
+            ], 400);
+        }
 
         try {
             DB::beginTransaction();
@@ -79,7 +89,7 @@ class StoreController extends Controller
                 DB::commit();
 
                 return response()->json([
-                    'message' => "สร้างมูลร้าน $store->name เรียบร้อย",
+                    'message' => "สร้างข้อมูลร้าน $store->name เรียบร้อย",
                     'data' => $store->getAttributes(),
                 ], 200);
             }
