@@ -1,24 +1,9 @@
 import Head from 'next/head'
-import { Layout, Menu } from 'antd'
+import { Layout, Menu, Alert } from 'antd'
 import { UploadOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons'
 import { PageHeader } from 'antd'
 
 const { Header, Content, Footer, Sider } = Layout
-
-const routes = [
-  {
-    path: 'index',
-    breadcrumbName: 'First-level Menu',
-  },
-  {
-    path: 'first',
-    breadcrumbName: 'Second-level Menu',
-  },
-  {
-    path: 'second',
-    breadcrumbName: 'Third-level Menu',
-  },
-]
 
 const MinimartLayout = (props) => {
   const { children, title } = props

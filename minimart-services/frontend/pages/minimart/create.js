@@ -1,31 +1,33 @@
 import React, { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
+import Swal from 'sweetalert2'
 
-import { Form, Input, Button, Checkbox, Row, Col } from 'antd'
-import { PoweroffOutlined } from '@ant-design/icons'
+import { Form, Input, Button, Checkbox, Row, Col, Alert } from 'antd'
 
 import MinimartLayout from '@/layouts/MinimartLayout'
 import InputThaiAddress from '@/components/InputThaiAddress'
 
 import { storeService } from 'services'
 
-export default function Home() {
+export default function Create() {
+  const router = useRouter()
   const [form] = Form.useForm()
 
-  const [address, setAddress] = useState({
-    subdistrict: '',
-    district: '',
-    province: '',
-    zipcode: '',
-    fulladdr: '',
-  })
+  // const [address, setAddress] = useState({
+  //   subdistrict: '',
+  //   district: '',
+  //   province: '',
+  //   zipcode: '',
+  //   fulladdr: '',
+  // })
 
-  const onChange = (targetName) => (targetValue) => {
-    setAddress({ ...address, [targetName]: targetValue })
-  }
-  const onSelect = (addresses) => {
-    setAddress({ ...address, ...addresses })
-    form.setFieldsValue(addresses)
-  }
+  // const onChange = (targetName) => (targetValue) => {
+  //   setAddress({ ...address, [targetName]: targetValue })
+  // }
+  // const onSelect = (addresses) => {
+  //   setAddress({ ...address, ...addresses })
+  //   form.setFieldsValue(addresses)
+  // }
 
   const [fetching, setFetching] = useState(false)
 
@@ -35,19 +37,58 @@ export default function Home() {
   }
 
   const onFinishFailed = (errorInfo) => {
-    // console.log('Failed:', errorInfo)
+    console.log('Failed:', errorInfo)
   }
 
   function createStore(data) {
     setFetching(true)
+
     return storeService
       .create(data)
       .then((result) => {
         console.log(result)
         setFetching(false)
+        Swal.fire({
+          icon: 'success',
+          allowOutsideClick: false,
+          backdrop: true,
+          confirmButtonColor: '#1890FF',
+          confirmButtonText: 'ตกลง',
+          // title: result.message,
+          html: result.message,
+        }).then((swalResult) => {
+          router.push('/minimart')
+        })
       })
       .catch((error) => {
         console.log(error)
+
+        if (error.status === 400) {
+          let message = ''
+          for (const [index, errorMessages] of Object.entries(error.message)) {
+            errorMessages.forEach((errorMessage) => {
+              message += `<span>${errorMessage}</span><br>`
+            })
+          }
+          Swal.fire({
+            icon: 'error',
+            allowOutsideClick: false,
+            backdrop: true,
+            confirmButtonColor: '#1890FF',
+            confirmButtonText: 'ตกลง',
+            html: `<div>${message}</div>`,
+          })
+        } else {
+          Swal.fire({
+            icon: 'error',
+            allowOutsideClick: false,
+            backdrop: true,
+            confirmButtonColor: '#1890FF',
+            confirmButtonText: 'ตกลง',
+            text: 'เกิดข้อผิดพลาดบางอย่าง ไม่สามารถบันทึกข้อมูลได้',
+          })
+        }
+
         setFetching(false)
       })
   }

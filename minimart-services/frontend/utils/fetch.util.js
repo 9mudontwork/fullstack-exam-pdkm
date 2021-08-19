@@ -42,15 +42,45 @@ function _delete(url) {
 
 // helper functions
 
+function parseJSON(response) {
+  return new Promise((resolve) =>
+    response.json().then((json) =>
+      resolve({
+        status: response.status,
+        ok: response.ok,
+        json,
+      })
+    )
+  )
+}
+
+// function handleResponse(response) {
+//   console.log(response)
+//   return response.text().then((text) => {
+//     const data = text && JSON.parse(text)
+
+//     if (!response.ok) {
+//       const error = (data && data.message) || response.statusText
+//       return Promise.reject(error)
+//     }
+
+//     return data
+//   })
+// }
 function handleResponse(response) {
-  return response.text().then((text) => {
-    const data = text && JSON.parse(text)
-
-    if (!response.ok) {
-      const error = (data && data.message) || response.statusText
-      return Promise.reject(error)
-    }
-
-    return data
+  console.log(response)
+  return new Promise(async (resolve, reject) => {
+    return parseJSON(response)
+      .then((response) => {
+        if (response.ok) {
+          return resolve(response.json)
+        }
+        return reject(response.json)
+      })
+      .catch((error) => {
+        reject({
+          networkError: error.message,
+        })
+      })
   })
 }
