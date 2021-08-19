@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      // "@fUtils/*": ["./resources/js/frontend/utils/*"],
+      // "@fStore/*": ["./resources/js/frontend/store/*"],
+      // "@fLayout/*": ["./resources/js/frontend/layouts/*"],
+      // "@fComponents/*": ["./resources/js/frontend/components/*"],
+      // "@fAssets/*": ["./resources/js/frontend/assets/*"],
+      // "@fPages/*": ["./resources/js/frontend/pages/*"]
+    }
+  },
+  "exclude": [
+    ".git",
+    ".app-cache",
+    ".npm",
+    ".npm-tmp",
+    "node_modules",
+    "vendor",
+    "**/node_modules/*",
+    "**/vendor/*",
+    "**/public/*"
+  ]
+}
