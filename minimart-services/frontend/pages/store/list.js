@@ -88,7 +88,9 @@ export default function List() {
       render: (text, record) => {
         return (
           <Space size="middle">
-            <Button icon={<EditOutlined />} size="small" />
+            <Link passHref href={`/store/edit/${record.id}`}>
+              <Button icon={<EditOutlined />} size="small" />
+            </Link>
             <Popconfirm title="ต้องการลบใช่หรือไม่ ?" onConfirm={() => handleDelete(record)}>
               <Button danger icon={<DeleteOutlined />} size="small" />
             </Popconfirm>
@@ -151,10 +153,8 @@ export default function List() {
 
   return (
     <>
-      <Link href="/minimart/create">
-        <a>
-          <Button icon={<PlusOutlined />}>เพิ่มร้านค้า</Button>
-        </a>
+      <Link passHref href="/store/create">
+        <Button icon={<PlusOutlined />}>เพิ่มร้านค้า</Button>
       </Link>
       <Table
         className="mt-4"

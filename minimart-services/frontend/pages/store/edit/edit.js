@@ -5,46 +5,40 @@ import Swal from 'sweetalert2'
 import { Form, Input, Button, Checkbox, Row, Col, Alert } from 'antd'
 
 import MinimartLayout from '@/layouts/MinimartLayout'
-import InputThaiAddress from '@/components/InputThaiAddress'
 
 import { storeService } from 'services'
 
-export default function Create() {
+export default function Edit(props) {
+  const storeData = props?.storeData
   const router = useRouter()
   const [form] = Form.useForm()
-
-  // const [address, setAddress] = useState({
-  //   subdistrict: '',
-  //   district: '',
-  //   province: '',
-  //   zipcode: '',
-  //   fulladdr: '',
-  // })
-
-  // const onChange = (targetName) => (targetValue) => {
-  //   setAddress({ ...address, [targetName]: targetValue })
-  // }
-  // const onSelect = (addresses) => {
-  //   setAddress({ ...address, ...addresses })
-  //   form.setFieldsValue(addresses)
-  // }
-
+  const [store, setStore] = useState(null)
   const [fetching, setFetching] = useState(false)
+
+  useEffect(() => {
+    if (storeData.status === 200) {
+      form.setFieldsValue(storeData.data)
+    }
+
+    if (storeData.status === 404) {
+      //
+    }
+  }, [form, storeData])
 
   const onFinish = (values) => {
     console.log('Success:', values)
-    createStore(values)
+    editStore(storeData.data.id, values)
   }
 
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo)
   }
 
-  function createStore(data) {
+  function editStore(id, data) {
     setFetching(true)
 
     return storeService
-      .create(data)
+      .update(id, data)
       .then((result) => {
         console.log(result)
         setFetching(false)
@@ -57,7 +51,8 @@ export default function Create() {
           // title: result.message,
           html: result.message,
         }).then((swalResult) => {
-          router.push('/minimart')
+          router.replace(router.asPath)
+          // router.push('/minimart')
         })
       })
       .catch((error) => {
@@ -95,14 +90,11 @@ export default function Create() {
 
   return (
     <>
-      <MinimartLayout title="เพิ่มร้านค้า">
+      <MinimartLayout title={`แก้ไขข้อมูลร้านค้า: ${storeData?.data?.name}`}>
         <Form
           form={form}
           name="basic"
           layout={'vertical'}
-          initialValues={{
-            remember: true,
-          }}
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
         >
@@ -158,92 +150,6 @@ export default function Create() {
             <Input />
           </Form.Item>
 
-          {/* <Row gutter={[16, 16]}>
-            <Col span={6}>
-              <Form.Item
-                label="ตำบล"
-                name="subdistrict"
-                rules={[
-                  {
-                    required: true,
-                    message: 'ตำบล จำเป็นต้องกรอก',
-                  },
-                ]}
-              >
-                <InputThaiAddress
-                  style={{ maxWidth: 350 }}
-                  field={'subdistrict'}
-                  value={address.subdistrict}
-                  onChange={onChange('subdistrict')}
-                  onSelect={onSelect}
-                />
-              </Form.Item>
-            </Col>
-
-            <Col span={6}>
-              <Form.Item
-                label="อำเภอ"
-                name="district"
-                rules={[
-                  {
-                    required: true,
-                    message: 'อำเภอ จำเป็นต้องกรอก',
-                  },
-                ]}
-              >
-                <InputThaiAddress
-                  style={{ maxWidth: 350 }}
-                  field={'district'}
-                  value={address.district}
-                  onChange={onChange('district')}
-                  onSelect={onSelect}
-                />
-              </Form.Item>
-            </Col>
-
-            <Col span={6}>
-              <Form.Item
-                label="จังหวัด"
-                name="province"
-                rules={[
-                  {
-                    required: true,
-                    message: 'จังหวัด จำเป็นต้องกรอก',
-                  },
-                ]}
-              >
-                <InputThaiAddress
-                  style={{ maxWidth: 350 }}
-                  field={'province'}
-                  value={address.province}
-                  onChange={onChange('province')}
-                  onSelect={onSelect}
-                />
-              </Form.Item>
-            </Col>
-
-            <Col span={6}>
-              <Form.Item
-                label="รหัสไปรษณีย์"
-                name="zipcode"
-                rules={[
-                  {
-                    required: true,
-                    message: 'รหัสไปรษณีย์ จำเป็นต้องกรอก',
-                  },
-                ]}
-              >
-                <InputThaiAddress
-                  style={{ maxWidth: 350 }}
-                  field={'zipcode'}
-                  value={address.zipcode}
-                  onChange={onChange('zipcode')}
-                  onSelect={onSelect}
-                />
-              </Form.Item>
-            </Col>
-          </Row> */}
-
           {/* https://stackoverflow.com/questions/65010399/react-antd-form-disable-submit-button */}
           <Form.Item shouldUpdate>
             {() => (
@@ -256,7 +162,7 @@ export default function Create() {
                 //   form.getFieldsError().filter(({ errors }) => errors.length).length > 0
                 // }
               >
-                บันทึก
+                แก้ไขข้อมูล
               </Button>
             )}
           </Form.Item>
