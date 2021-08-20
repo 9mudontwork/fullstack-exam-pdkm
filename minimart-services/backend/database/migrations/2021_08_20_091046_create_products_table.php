@@ -18,7 +18,8 @@ class CreateProductsTable extends Migration
             $table->string('name')->nullable()->comment('ชื่อสินค้า');
             $table->text('description')->nullable()->comment('รายละเอียดสินค้า');
             $table->decimal('price', 10)->nullable()->comment('ราคาสินค้า');
-            $table->string('unit_type')->nullable()->comment('หน่วยสินค้า');
+            $table->string('unit', 50)->nullable()->comment('หน่วยสินค้า');
+            $table->integer('categories_id');
             $table->string('created_at', 45)->nullable();
             $table->string('updated_at', 45)->nullable();
         });
