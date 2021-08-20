@@ -1,0 +1,498 @@
+{
+	"info": {
+		"_postman_id": "09b41f84-05e5-41c5-9860-41a2544bedf2",
+		"name": "minimart-services",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "stores",
+			"item": [
+				{
+					"name": "products",
+					"item": [
+						{
+							"name": "store",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "categories_id[]",
+											"value": "6",
+											"type": "text"
+										},
+										{
+											"key": "categories_id[]",
+											"value": "9",
+											"type": "text"
+										},
+										{
+											"key": "categories_id[]",
+											"value": "10",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{minimart-dev}}api/stores/2/products",
+									"host": [
+										"{{minimart-dev}}api"
+									],
+									"path": [
+										"stores",
+										"2",
+										"products"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "{{minimart-dev}}api/stores/2/products/6",
+									"host": [
+										"{{minimart-dev}}api"
+									],
+									"path": [
+										"stores",
+										"2",
+										"products",
+										"6"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "index",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{minimart-dev}}api/stores/",
+							"host": [
+								"{{minimart-dev}}api"
+							],
+							"path": [
+								"stores",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "store",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "ร้านทดสอบ 1",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "รายละเอียด ร้านทดสอบ 1",
+									"type": "text"
+								},
+								{
+									"key": "phone_number",
+									"value": "0881234567",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "155 หมู่ 2 ต.แม่เหียะ อ.เมือง จ.เชียงใหม่ 50100",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{minimart-dev}}api/stores/",
+							"host": [
+								"{{minimart-dev}}api"
+							],
+							"path": [
+								"stores",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "แก้ไข ร้านทดสอบ 1 แก้ไข",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "แก้ไข รายละเอียด ร้านทดสอบ 1 ",
+									"type": "text"
+								},
+								{
+									"key": "phone_number",
+									"value": "แก้ไข 0881234567",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "แก้ไข 155 หมู่ 2 ต.แม่เหียะ อ.เมือง จ.เชียงใหม่ 50100",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{minimart-dev}}api/stores/2",
+							"host": [
+								"{{minimart-dev}}api"
+							],
+							"path": [
+								"stores",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "แก้ไข ร้านทดสอบ 1 แก้ไข",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "description",
+									"value": "แก้ไข รายละเอียด ร้านทดสอบ 1 ",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "phone_number",
+									"value": "แก้ไข 0881234567",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "address",
+									"value": "แก้ไข 155 หมู่ 2 ต.แม่เหียะ อ.เมือง จ.เชียงใหม่ 50100",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{minimart-dev}}api/stores/2",
+							"host": [
+								"{{minimart-dev}}api"
+							],
+							"path": [
+								"stores",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "view",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "แก้ไข ร้านทดสอบ 1 แก้ไข",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "description",
+									"value": "แก้ไข รายละเอียด ร้านทดสอบ 1 ",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "phone_number",
+									"value": "แก้ไข 0881234567",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "address",
+									"value": "แก้ไข 155 หมู่ 2 ต.แม่เหียะ อ.เมือง จ.เชียงใหม่ 50100",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{minimart-dev}}api/stores/1",
+							"host": [
+								"{{minimart-dev}}api"
+							],
+							"path": [
+								"stores",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "products",
+			"item": [
+				{
+					"name": "store",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "โค้ก",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "โค้ก โค้ก โค้ก โค้ก",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "20",
+									"type": "text"
+								},
+								{
+									"key": "unit",
+									"value": "ขวด",
+									"type": "text"
+								},
+								{
+									"key": "categories_id",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{minimart-dev}}api/products/",
+							"host": [
+								"{{minimart-dev}}api"
+							],
+							"path": [
+								"products",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "index",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{minimart-dev}}api/products",
+							"host": [
+								"{{minimart-dev}}api"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "view",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "แก้ไข ร้านทดสอบ 1 แก้ไข",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "description",
+									"value": "แก้ไข รายละเอียด ร้านทดสอบ 1 ",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "phone_number",
+									"value": "แก้ไข 0881234567",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "address",
+									"value": "แก้ไข 155 หมู่ 2 ต.แม่เหียะ อ.เมือง จ.เชียงใหม่ 50100",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{minimart-dev}}api/products/6",
+							"host": [
+								"{{minimart-dev}}api"
+							],
+							"path": [
+								"products",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "แก้ไข โค้ก",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "แก้ไข โค้ก โค้ก โค้ก โค้ก",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "20",
+									"type": "text"
+								},
+								{
+									"key": "unit",
+									"value": "กบ",
+									"type": "text"
+								},
+								{
+									"key": "categories_id",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{minimart-dev}}api/products/1",
+							"host": [
+								"{{minimart-dev}}api"
+							],
+							"path": [
+								"products",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "แก้ไข ร้านทดสอบ 1 แก้ไข",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "description",
+									"value": "แก้ไข รายละเอียด ร้านทดสอบ 1 ",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "phone_number",
+									"value": "แก้ไข 0881234567",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "address",
+									"value": "แก้ไข 155 หมู่ 2 ต.แม่เหียะ อ.เมือง จ.เชียงใหม่ 50100",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{minimart-dev}}api/products/1",
+							"host": [
+								"{{minimart-dev}}api"
+							],
+							"path": [
+								"products",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
