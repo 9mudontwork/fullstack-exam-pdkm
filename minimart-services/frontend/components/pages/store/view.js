@@ -258,7 +258,7 @@ export default function View(props) {
 
   return (
     <>
-      <MinimartLayout title={`แก้ไขข้อมูลร้านค้า: ${store.name}`}>
+      <MinimartLayout title={`ข้อมูลร้านค้า: ${store.name}`}>
         <Descriptions title="ข้อมูลร้านค้า">
           <Descriptions.Item label="ชื่อร้านค้า">{store.name}</Descriptions.Item>
           <Descriptions.Item label="คำอธิบายร้านค้า">{store.description}</Descriptions.Item>

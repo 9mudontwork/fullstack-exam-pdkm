@@ -121,7 +121,10 @@ class ProductController extends Controller
             return response()->json([
                 'status' => 200,
                 'message' => "ข้อมูลสินค้า: $product->name",
-                'data' => $product->getAttributes(),
+                'data' => [
+                    'product' => $product->getAttributes(),
+                    'category' => $product->category
+                ],
             ], 200);
         } catch (ModelNotFoundException $e) {
             return response()->json([

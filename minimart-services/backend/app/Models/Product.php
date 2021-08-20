@@ -25,4 +25,9 @@ class Product extends Model
     {
         return $this->belongsToMany(Store::class, 'stores_has_products');
     }
+
+    public function category()
+    {
+        return $this->hasOne(Category::class, 'id', 'categories_id');
+    }
 }

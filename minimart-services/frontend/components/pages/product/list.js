@@ -52,7 +52,13 @@ export default function List() {
       title: 'ชื่อสินค้า',
       dataIndex: 'name',
       key: 'name',
-      render: (text) => <a>{text}</a>,
+      render: (text, record) => (
+        <>
+          <Link href={`/product/${record.id}`}>
+            <a>{text}</a>
+          </Link>
+        </>
+      ),
     },
     {
       title: 'รายละเอียดสินค้า',
