@@ -89,12 +89,17 @@ class StoreController extends Controller
                 DB::commit();
 
                 return response()->json([
-                    'message' => "สร้างข้อมูลร้าน $store->name เรียบร้อย",
+                    'message' => "เพิ่มข้อมูลร้าน $store->name เรียบร้อย",
                     'data' => $store->getAttributes(),
                 ], 200);
             }
         } catch (\Throwable $th) {
             DB::rollBack();
+            return response()->json([
+                'status' => 500,
+                'message' => $th->getMessage(),
+                'error' => "{$th->getLine()} {$th->getFile()}"
+            ], 500);
         }
     }
 
@@ -115,9 +120,10 @@ class StoreController extends Controller
                 'data' => $store->getAttributes(),
             ], 200);
         } catch (ModelNotFoundException $e) {
-            return response([
+            return response()->json([
                 'status' => 404,
                 'message' => 'ไม่พบข้อมูล ร้านค้า',
+                'data' => null,
             ], 404);
         } catch (\Throwable $th) {
             DB::rollBack();
@@ -138,6 +144,42 @@ class StoreController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validateRules = [
+            'name' => 'required|string|max:255',
+            'description' => 'required|string|max:65535',
+            'phone_number' => 'required|string|max:20',
+            'address' => 'required|string|max:255',
+        ];
+
+        $validateMessages = [
+            'name.required' =>  ':attribute จำเป็นต้องกรอก',
+            'description.required' =>  ':attribute จำเป็นต้องกรอก',
+            'phone_number.required' =>  ':attribute จำเป็นต้องกรอก',
+            'address.required' =>  ':attribute จำเป็นต้องกรอก',
+
+            'name.max' =>  ':attribute ต้องไม่เกิน :max ตัวอักษร',
+            'description.max' =>  ':attribute ต้องไม่เกิน :max ตัวอักษร',
+            'phone_number.max' =>  ':attribute ต้องไม่เกิน :max ตัวอักษร',
+            'address.max' =>  ':attribute ต้องไม่เกิน :max ตัวอักษร',
+        ];
+
+        $attributesName = [
+            'name' => 'ชื่อร้านค้า',
+            'description' => 'คำอธิบายร้านค้า',
+            'phone_number' => 'เบอร์ติดต่อร้านค้า',
+            'address' => 'ที่อยู่',
+        ];
+
+        $validator = Validator::make($request->all(), $validateRules, $validateMessages, $attributesName);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 400,
+                'message' => $validator->messages(),
+                'data' => null,
+            ], 400);
+        }
+
         try {
             $store = Store::findOrFail($id);
 
@@ -156,12 +198,12 @@ class StoreController extends Controller
 
                 return response()->json([
                     'status' => 200,
-                    'message' => "อัปเดตข้อมูลร้านค้า $store->name เรียบร้อย",
+                    'message' => "แก้ไขข้อมูลร้านค้า $store->name เรียบร้อย",
                     'data' => $store->getAttributes(),
                 ], 200);
             }
         } catch (ModelNotFoundException $e) {
-            return response([
+            return response()->json([
                 'status' => 404,
                 'message' => 'ไม่พบข้อมูล ร้านค้า',
             ], 404);
