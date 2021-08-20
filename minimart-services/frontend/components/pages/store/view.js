@@ -2,21 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Swal from 'sweetalert2'
-import {
-  Form,
-  Input,
-  Button,
-  Checkbox,
-  Row,
-  Col,
-  Alert,
-  Descriptions,
-  Table,
-  Popconfirm,
-  Space,
-  Modal,
-  Select,
-} from 'antd'
+import { Form, Button, Descriptions, Table, Popconfirm, Space, Modal, Select } from 'antd'
 import MinimartLayout from '@/layouts/MinimartLayout'
 import { storeService } from 'services'
 import Link from 'next/link'

@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Swal from 'sweetalert2'
-
-import { Form, Input, Button, Checkbox, Row, Col, Alert } from 'antd'
-
+import { Form, Input, Button} from 'antd'
 import MinimartLayout from '@/layouts/MinimartLayout'
-
 import { storeService } from 'services'
 
 export default function Edit(props) {

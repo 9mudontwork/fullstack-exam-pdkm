@@ -2,10 +2,8 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-
-import { Table, Tag, Space, Button, Popconfirm } from 'antd'
+import { Table, Space, Button, Popconfirm } from 'antd'
 import { EditOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons'
-
 import { storeService } from 'services'
 
 export default function List() {

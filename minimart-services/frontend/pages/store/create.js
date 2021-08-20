@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Swal from 'sweetalert2'
-
 import { Form, Input, Button, Checkbox, Row, Col, Alert } from 'antd'
-
 import MinimartLayout from '@/layouts/MinimartLayout'
 import InputThaiAddress from '@/components/InputThaiAddress'
 

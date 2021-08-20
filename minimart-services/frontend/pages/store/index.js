@@ -1,6 +1,4 @@
-import Head from 'next/head'
-import { Layout, Menu } from 'antd'
-import { UploadOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons'
+import { Layout } from 'antd'
 import MinimartLayout from '@/layouts/MinimartLayout'
 import List from '@/components/pages/store/list'
 

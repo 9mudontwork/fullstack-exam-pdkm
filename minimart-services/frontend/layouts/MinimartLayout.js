@@ -1,14 +1,8 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { Layout, Menu, Alert } from 'antd'
-import {
-  UploadOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
-  ShopOutlined,
-  ShoppingOutlined,
-} from '@ant-design/icons'
+import { Layout, Menu } from 'antd'
+import { ShopOutlined, ShoppingOutlined } from '@ant-design/icons'
 import { PageHeader } from 'antd'
 import { useEffect } from 'react'
 
