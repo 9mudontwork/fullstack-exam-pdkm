@@ -1,12 +1,32 @@
 import Head from 'next/head'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { Layout, Menu, Alert } from 'antd'
-import { UploadOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons'
+import {
+  UploadOutlined,
+  UserOutlined,
+  VideoCameraOutlined,
+  ShopOutlined,
+  ShoppingOutlined,
+} from '@ant-design/icons'
 import { PageHeader } from 'antd'
+import { useEffect } from 'react'
 
 const { Header, Content, Footer, Sider } = Layout
 
 const MinimartLayout = (props) => {
+  const router = useRouter()
   const { children, title } = props
+
+  const isStorePath = () => {
+    if (router.pathname.includes('store')) return ['1']
+
+    return ['2']
+  }
+
+  useEffect(() => {
+    console.log(router)
+  })
   return (
     <>
       <Head>
@@ -24,11 +44,11 @@ const MinimartLayout = (props) => {
           }}
         >
           <div className="bg-opacity-20 h-8 m-4 bg-white" />
-          <Menu theme="dark" mode="inline" defaultSelectedKeys={['2']}>
-            <Menu.Item key="1" icon={<UserOutlined />}>
+          <Menu theme="dark" mode="inline" defaultSelectedKeys={isStorePath()}>
+            <Menu.Item key="1" icon={<ShopOutlined />} onClick={() => router.push('/store')}>
               ร้านค้า
             </Menu.Item>
-            <Menu.Item key="2" icon={<VideoCameraOutlined />}>
+            <Menu.Item key="2" icon={<ShoppingOutlined />} onClick={() => router.push('/product')}>
               สินค้า
             </Menu.Item>
           </Menu>

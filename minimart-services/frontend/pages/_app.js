@@ -11,7 +11,7 @@ import '@/css/tailwind.css'
  * https://stackoverflow.com/questions/58070996/how-to-fix-the-warning-uselayouteffect-does-nothing-on-the-server
  *
  */
-React.useLayoutEffect = React.useEffect
+// React.useLayoutEffect = React.useEffect
 
 function NextApp({ Component, pageProps }) {
   return (
