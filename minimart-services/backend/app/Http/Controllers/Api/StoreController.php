@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\StoreResource;
+use App\Models\Product;
 use App\Models\Store;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
@@ -113,13 +114,15 @@ class StoreController extends Controller
     {
         try {
             $store = Store::findOrFail($id);
+            $products = Product::all();
 
             return response()->json([
                 'status' => 200,
                 'message' => "ข้อมูลร้านค้า $store->name",
                 'data' => [
                     'store' => $store->getAttributes(),
-                    'products' => $store->products
+                    'products' => $store->products,
+                    'productLists' => $products
                 ],
             ], 200);
         } catch (ModelNotFoundException $e) {

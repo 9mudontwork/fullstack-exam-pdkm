@@ -10,9 +10,10 @@ use Illuminate\Database\Eloquent\Model;
  */
 class StoreHasProduct extends Model
 {
+    public $timestamps = false;
     /**
      * The table associated with the model.
-     * 
+     *
      * @var string
      */
     protected $table = 'stores_has_products';
@@ -21,5 +22,4 @@ class StoreHasProduct extends Model
      * @var array
      */
     protected $fillable = [];
-
 }
