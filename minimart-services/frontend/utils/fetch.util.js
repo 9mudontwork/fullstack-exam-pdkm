@@ -32,15 +32,12 @@ function put(url, body) {
   return fetch(url, requestOptions).then(handleResponse)
 }
 
-// prefixed with underscored because delete is a reserved word in javascript
 function _delete(url) {
   const requestOptions = {
     method: 'DELETE',
   }
   return fetch(url, requestOptions).then(handleResponse)
 }
-
-// helper functions
 
 function parseJSON(response) {
   return new Promise((resolve) =>
@@ -54,19 +51,6 @@ function parseJSON(response) {
   )
 }
 
-// function handleResponse(response) {
-//   console.log(response)
-//   return response.text().then((text) => {
-//     const data = text && JSON.parse(text)
-
-//     if (!response.ok) {
-//       const error = (data && data.message) || response.statusText
-//       return Promise.reject(error)
-//     }
-
-//     return data
-//   })
-// }
 function handleResponse(response) {
   console.log(response)
   return new Promise(async (resolve, reject) => {
