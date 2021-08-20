@@ -45,7 +45,13 @@ export default function List() {
       title: 'ชื่อร้านค้า',
       dataIndex: 'name',
       key: 'name',
-      render: (text) => <a>{text}</a>,
+      render: (text, record) => (
+        <>
+          <Link href={`/store/${record.id}`}>
+            <a>{text}</a>
+          </Link>
+        </>
+      ),
     },
     {
       title: 'คำอธิบายร้านค้า',
