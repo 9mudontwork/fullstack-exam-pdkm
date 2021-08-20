@@ -7,6 +7,8 @@ export const storeService = {
   create,
   update,
   delete: _delete,
+  addProduct: addProduct,
+  deleteProduct: deleteProduct,
 }
 
 const baseUrl = `${serviceUrl}/stores`
@@ -29,4 +31,12 @@ function update(id, params) {
 
 function _delete(id) {
   return fetchUtils.delete(`${baseUrl}/${id}`)
+}
+
+function addProduct(id, params) {
+  return fetchUtils.post(`${baseUrl}/${id}/products`, params)
+}
+
+function deleteProduct(storeId, productId) {
+  return fetchUtils.delete(`${baseUrl}/${storeId}/products/${productId}`)
 }

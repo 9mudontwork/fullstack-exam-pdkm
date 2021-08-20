@@ -1,4 +1,4 @@
-import Edit from './edit'
+import Edit from '@/components/pages/store/edit'
 import { storeService } from 'services'
 
 export default Edit

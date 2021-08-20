@@ -52,7 +52,7 @@ function parseJSON(response) {
 }
 
 function handleResponse(response) {
-  console.log(response)
+  // console.log(response)
   return new Promise(async (resolve, reject) => {
     return parseJSON(response)
       .then((response) => {

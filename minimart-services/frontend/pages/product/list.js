@@ -34,7 +34,7 @@ export default function List() {
         setFetching(false)
         setProducts(datas)
 
-        console.log(results)
+        // console.log(results)
       })
     }
 
@@ -78,7 +78,17 @@ export default function List() {
             <Link passHref href={`/product/edit/${record.id}`}>
               <Button icon={<EditOutlined />} size="small" />
             </Link>
-            <Popconfirm title="ต้องการลบใช่หรือไม่ ?" onConfirm={() => handleDelete(record)}>
+            <Popconfirm
+              title={() => {
+                return (
+                  <>
+                    ต้องการลบใช่หรือไม่ ? <br />
+                    สินค้าจะถูกนำออกจากทุกร้านค้า
+                  </>
+                )
+              }}
+              onConfirm={() => handleDelete(record)}
+            >
               <Button danger icon={<DeleteOutlined />} size="small" />
             </Popconfirm>
           </Space>
@@ -100,12 +110,12 @@ export default function List() {
     return productService
       .delete(id)
       .then((result) => {
-        console.log('success del: ' + result)
+        // console.log('success del: ' + result)
         setFetching(false)
         return true
       })
       .catch((error) => {
-        console.log('success err: ' + error)
+        // console.log('success err: ' + error)
 
         if (error.status === 400) {
           let message = ''

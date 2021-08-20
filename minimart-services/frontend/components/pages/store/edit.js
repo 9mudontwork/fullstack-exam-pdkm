@@ -9,29 +9,28 @@ import MinimartLayout from '@/layouts/MinimartLayout'
 import { storeService } from 'services'
 
 export default function Edit(props) {
-  const storeData = props?.storeData
+  const dataService = props?.storeData
   const router = useRouter()
   const [form] = Form.useForm()
-  const [store, setStore] = useState(null)
+  const [storeData, setStoreData] = useState(null)
   const [fetching, setFetching] = useState(false)
 
   useEffect(() => {
-    if (storeData.status === 200) {
-      form.setFieldsValue(storeData.data)
-    }
+    if (dataService.status === 200) {
+      const { store } = dataService.data
 
-    if (storeData.status === 404) {
-      //
+      setStoreData(store)
+      form.setFieldsValue(storeData)
     }
-  }, [form, storeData])
+  }, [form, dataService, storeData])
 
   const onFinish = (values) => {
-    console.log('Success:', values)
-    editStore(storeData.data.id, values)
+    // console.log('Success:', values)
+    editStore(storeData.id, values)
   }
 
   const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo)
+    // console.log('Failed:', errorInfo)
   }
 
   function editStore(id, data) {
@@ -40,7 +39,7 @@ export default function Edit(props) {
     return storeService
       .update(id, data)
       .then((result) => {
-        console.log(result)
+        // console.log(result)
         setFetching(false)
         Swal.fire({
           icon: 'success',
@@ -56,7 +55,7 @@ export default function Edit(props) {
         })
       })
       .catch((error) => {
-        console.log(error)
+        // console.log(error)
 
         if (error.status === 400) {
           let message = ''
@@ -90,7 +89,7 @@ export default function Edit(props) {
 
   return (
     <>
-      <MinimartLayout title={`แก้ไขข้อมูลร้านค้า: ${storeData?.data?.name}`}>
+      <MinimartLayout title={`แก้ไขข้อมูลร้านค้า: ${storeData?.name}`}>
         <Form
           form={form}
           name="basic"

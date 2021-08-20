@@ -32,12 +32,12 @@ export default function Create() {
   const [fetching, setFetching] = useState(false)
 
   const onFinish = (values) => {
-    console.log('Success:', values)
+    // console.log('Success:', values)
     createStore(values)
   }
 
   const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo)
+    // console.log('Failed:', errorInfo)
   }
 
   function createStore(data) {
@@ -46,7 +46,7 @@ export default function Create() {
     return storeService
       .create(data)
       .then((result) => {
-        console.log(result)
+        // console.log(result)
         setFetching(false)
         Swal.fire({
           icon: 'success',
@@ -61,7 +61,7 @@ export default function Create() {
         })
       })
       .catch((error) => {
-        console.log(error)
+        // console.log(error)
 
         if (error.status === 400) {
           let message = ''

@@ -42,12 +42,12 @@ export default function Edit(props) {
   }, [form, productData])
 
   const onFinish = (values) => {
-    console.log('Success:', values)
+    // console.log('Success:', values)
     editProduct(productData?.data?.id, values)
   }
 
   const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo)
+    // console.log('Failed:', errorInfo)
   }
 
   function editProduct(id, data) {
@@ -56,7 +56,7 @@ export default function Edit(props) {
     return productService
       .update(id, data)
       .then((result) => {
-        console.log('edit success: ' + result)
+        // console.log('edit success: ' + result)
 
         setFetching(false)
         Swal.fire({
@@ -72,7 +72,7 @@ export default function Edit(props) {
         })
       })
       .catch((error) => {
-        console.log('edit error: ' + error)
+        // console.log('edit error: ' + error)
 
         if (error.status === 400) {
           let message = ''

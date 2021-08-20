@@ -30,7 +30,7 @@ export default function List() {
       setFetching(false)
       setStores(datas)
 
-      console.log(results)
+      // console.log(results)
     })
   }, [])
 
@@ -119,12 +119,12 @@ export default function List() {
     return storeService
       .delete(id)
       .then((result) => {
-        console.log(result)
+        // console.log(result)
         setFetching(false)
         return true
       })
       .catch((error) => {
-        console.log(error)
+        // console.log(error)
 
         if (error.status === 400) {
           let message = ''

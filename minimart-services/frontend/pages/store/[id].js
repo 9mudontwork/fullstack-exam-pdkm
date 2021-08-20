@@ -1,4 +1,4 @@
-import View from './view'
+import View from '@/components/pages/store/view'
 import { storeService } from 'services'
 
 export default View

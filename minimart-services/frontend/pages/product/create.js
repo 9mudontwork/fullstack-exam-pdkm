@@ -35,12 +35,12 @@ export default function Create() {
   }, [])
 
   const onFinish = (values) => {
-    console.log('Success:', values)
+    // console.log('Success:', values)
     createProduct(values)
   }
 
   const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo)
+    // console.log('Failed:', errorInfo)
   }
 
   function createProduct(data) {
@@ -49,7 +49,7 @@ export default function Create() {
     return productService
       .create(data)
       .then((result) => {
-        console.log('create success: ' + result)
+        // console.log('create success: ' + result)
 
         setFetching(false)
         Swal.fire({
@@ -65,7 +65,7 @@ export default function Create() {
         })
       })
       .catch((error) => {
-        console.log('create error: ' + error)
+        // console.log('create error: ' + error)
 
         if (error.status === 400) {
           let message = ''
