@@ -3,12 +3,9 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-
-import { Table, Tag, Space, Button, Popconfirm } from 'antd'
+import { Table, Space, Button, Popconfirm } from 'antd'
 import { EditOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons'
-
 import { productService } from 'services'
-import { useRouter } from 'next/router'
 
 export default function List() {
   const [fetching, setFetching] = useState(true)
