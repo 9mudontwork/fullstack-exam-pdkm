@@ -4,7 +4,7 @@ import { productService } from 'services'
 export default Edit
 
 export async function getServerSideProps({ params }) {
-  const productData = await productService
+  const productServiceResults = await productService
     .getById(params.id)
     .then((result) => {
       return result
@@ -14,13 +14,13 @@ export async function getServerSideProps({ params }) {
     })
 
   // https://nextjs.org/blog/next-10#notfound-support
-  if (productData.status === 404) {
+  if (productServiceResults.status === 404) {
     return {
       notFound: true,
     }
   }
 
   return {
-    props: { productData },
+    props: { productServiceResults },
   }
 }

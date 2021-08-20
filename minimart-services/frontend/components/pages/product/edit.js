@@ -2,15 +2,16 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Swal from 'sweetalert2'
-import { Form, Input, Button, Checkbox, Row, Col, Alert, InputNumber, Select } from 'antd'
+import { Form, Input, Button, InputNumber, Select } from 'antd'
 import MinimartLayout from '@/layouts/MinimartLayout'
 import { categoryService, productService } from 'services'
 
 export default function Edit(props) {
-  const productData = props?.productData
+  const productServiceResults = props?.productServiceResults
   const router = useRouter()
   const [form] = Form.useForm()
   const [fetching, setFetching] = useState(false)
+  const [productData, setProductData] = useState(null)
   const [categories, setCategories] = useState([])
   const [mounted, setMounted] = useState(false)
   const { Option } = Select
@@ -36,14 +37,19 @@ export default function Edit(props) {
   }, [])
 
   useEffect(() => {
-    if (productData.status === 200) {
-      form.setFieldsValue(productData.data)
+    if (!mounted) {
+      if (productServiceResults?.status === 200) {
+        const { product, category } = productServiceResults.data
+
+        setProductData(product)
+        form.setFieldsValue(product)
+      }
     }
-  }, [form, productData])
+  }, [form])
 
   const onFinish = (values) => {
     // console.log('Success:', values)
-    editProduct(productData?.data?.id, values)
+    editProduct(productData?.id, values)
   }
 
   const onFinishFailed = (errorInfo) => {
@@ -106,7 +112,7 @@ export default function Edit(props) {
 
   return (
     <>
-      <MinimartLayout title={`แก้ไขสินค้า: ${productData.data.name}`}>
+      <MinimartLayout title={`แก้ไขสินค้า: ${productData?.name}`}>
         <Form
           form={form}
           name="basic"

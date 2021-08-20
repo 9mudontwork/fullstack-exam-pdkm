@@ -67,7 +67,7 @@ export default function View(props) {
       key: 'name',
       render: (text, record) => (
         <>
-          <Link href={`/products/${record.id}`}>
+          <Link href={`/product/${record.id}`}>
             <a>{text}</a>
           </Link>
         </>
@@ -79,7 +79,7 @@ export default function View(props) {
       key: 'description',
     },
     {
-      title: 'ราคาสินค้า',
+      title: 'ราคาสินค้า (บาท)',
       dataIndex: 'price',
       key: 'price',
     },

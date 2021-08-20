@@ -66,7 +66,7 @@ export default function List() {
       key: 'description',
     },
     {
-      title: 'ราคาสินค้า',
+      title: 'ราคาสินค้า (บาท)',
       dataIndex: 'price',
       key: 'price',
     },
