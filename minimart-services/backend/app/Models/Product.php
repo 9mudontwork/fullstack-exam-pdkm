@@ -21,4 +21,8 @@ class Product extends Model
      */
     protected $fillable = ['name', 'description', 'price', 'unit', 'categories_id', 'created_at', 'updated_at'];
 
+    public function stores()
+    {
+        return $this->belongsToMany(Store::class, 'stores_has_products');
+    }
 }

@@ -117,7 +117,10 @@ class StoreController extends Controller
             return response()->json([
                 'status' => 200,
                 'message' => "ข้อมูลร้านค้า $store->name",
-                'data' => $store->getAttributes(),
+                'data' => [
+                    'store' => $store->getAttributes(),
+                    'products' => $store->products
+                ],
             ], 200);
         } catch (ModelNotFoundException $e) {
             return response()->json([

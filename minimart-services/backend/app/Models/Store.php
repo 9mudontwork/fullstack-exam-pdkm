@@ -20,4 +20,9 @@ class Store extends Model
      */
     protected $fillable = ['name', 'description', 'phone_number', 'address', 'created_at', 'updated_at'];
 
+
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, 'stores_has_products');
+    }
 }
