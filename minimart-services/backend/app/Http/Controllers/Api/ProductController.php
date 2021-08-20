@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
+use App\Models\StoreHasProduct;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -35,13 +36,14 @@ class ProductController extends Controller
         $validateRules = [
             'name' => 'required|string|max:255',
             'description' => 'required|string|max:65535',
-            'price' => 'required|numeric',
+            'price' => 'required|numeric|between:1,100000',
             'unit' => 'required|string|max:50',
             'categories_id' => 'required',
         ];
 
         $requiredMessage = ':attribute จำเป็นต้องกรอก';
         $maxMessage = ':attribute ต้องไม่เกิน :max ตัวอักษร';
+        $maxNumbericMessage = ':attribute ต้องอยู่ระหว่าง :min ถึง :max';
         $validateMessages = [
             'name.required' =>  $requiredMessage,
             'description.required' =>  $requiredMessage,
@@ -51,7 +53,7 @@ class ProductController extends Controller
 
             'name.max' =>  $maxMessage,
             'description.max' =>  $maxMessage,
-            'price.max' =>  $maxMessage,
+            'price.between' =>  $maxNumbericMessage,
             'unit.max' =>  $maxMessage,
         ];
 
@@ -149,13 +151,14 @@ class ProductController extends Controller
         $validateRules = [
             'name' => 'required|string|max:255',
             'description' => 'required|string|max:65535',
-            'price' => 'required|numeric',
+            'price' => 'required|numeric|between:1,100000',
             'unit' => 'required|string|max:50',
             'categories_id' => 'required',
         ];
 
         $requiredMessage = ':attribute จำเป็นต้องกรอก';
         $maxMessage = ':attribute ต้องไม่เกิน :max ตัวอักษร';
+        $maxNumbericMessage = ':attribute ต้องอยู่ระหว่าง :min ถึง :max';
         $validateMessages = [
             'name.required' =>  $requiredMessage,
             'description.required' =>  $requiredMessage,
@@ -165,7 +168,7 @@ class ProductController extends Controller
 
             'name.max' =>  $maxMessage,
             'description.max' =>  $maxMessage,
-            'price.max' =>  $maxMessage,
+            'price.between' =>  $maxNumbericMessage,
             'unit.max' =>  $maxMessage,
         ];
 
@@ -234,10 +237,14 @@ class ProductController extends Controller
     {
         try {
             $product = Product::findOrFail($id);
+            $storeHasProduct = StoreHasProduct::where(['product_id' => $id]);
 
             DB::beginTransaction();
 
             if ($product->delete()) {
+
+                if ($storeHasProduct->count() > 0)
+                    $storeHasProduct->delete();
 
                 DB::commit();
 
