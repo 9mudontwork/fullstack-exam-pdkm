@@ -1,6 +1,8 @@
 <template>
   <n-config-provider :theme="darkTheme" class="item-FK1RYbfX">
+    <!-- :default-expanded-names="['1', '2', '3']" -->
     <n-collapse>
+      <!-- ===== 1 ===== -->
       <n-collapse-item title="ข้อ 1.1" name="1">
         <div>
           <n-h4
@@ -26,20 +28,15 @@
                   <n-input
                     v-model:value="one.formValue.rockChar"
                     :placeholder="`ใส่หิน ${one.formValue.rockCount ?? 'x'} ก้อน`"
-                    @keydown="$event.target.value.replace(!/(R|G|B)/g, '')"
                   />
                 </n-form-item>
-
-                <!-- <n-form-item>
-                  <n-button @click="one.handleSubmitOne">คลิกดูคำตอบ</n-button>
-                </n-form-item> -->
               </n-form>
             </n-space>
             มีจำนวนคู่หินที่มีสีเดียวกันติดอยู่ <n-text type="info">{{ one.answer }}</n-text> คู่
           </n-card>
         </div>
       </n-collapse-item>
-
+      <!-- ===== 2 ===== -->
       <n-collapse-item title="ข้อ 1.2" name="2">
         <div>
           <n-h4>
@@ -48,8 +45,27 @@
             หากถอนเงินออกมาทั้งหมดจะได้ธนบัตรจำนวนน้อยที่สุดจำนวนเท่าไร
           </n-h4>
         </div>
-      </n-collapse-item>
 
+        <div>
+          <n-card title="คำตอบ">
+            <n-space vertical>
+              <n-form :model="two.formValue" :rules="two.rules" ref="twoForm">
+                <n-form-item label="จำนวนเงิน" path="moneyAmount">
+                  <n-input-number
+                    v-model:value="two.formValue.moneyAmount"
+                    min="0"
+                    placeholder="ใส่จำนวนเงิน"
+                  />
+                </n-form-item>
+              </n-form>
+            </n-space>
+            จำนวนธนบัตรที่น้อยที่สุดที่ลุงพรชัยจะได้รับ
+            <n-text type="info">{{ toCommaNumber(two.answer.value) }}</n-text>
+            ใบ
+          </n-card>
+        </div>
+      </n-collapse-item>
+      <!-- ===== 3 ===== -->
       <n-collapse-item title="ข้อ 1.3  (Optional Test)" name="3">
         <div>
           <n-h4>
@@ -62,6 +78,30 @@
             Input บรรทัดแรกจะเป็นค่า N A B C โดยที่ N คือ ความยาวของกิ่งไม้ (1 ≤ N) และ A, B, C
             คือความยาวของท่อนไม้ที่กำหนด (A, B, C ≤ 4000) Output แสดงจำนวนท่อนไม้ทั้งหมดที่ตัดได้
           </n-h4>
+        </div>
+
+        <div>
+          <n-card title="คำตอบ">
+            <n-space vertical>
+              <n-form :model="one.formValue" :rules="one.rules" ref="oneForm">
+                <n-form-item label="จำนวนหิน" path="rockCount">
+                  <n-input-number
+                    v-model:value="one.formValue.rockCount"
+                    min="1"
+                    placeholder="ใส่จำนวนหิน"
+                  />
+                </n-form-item>
+
+                <n-form-item label="ใส่หิน R G B" path="rockChar">
+                  <n-input
+                    v-model:value="one.formValue.rockChar"
+                    :placeholder="`ใส่หิน ${one.formValue.rockCount ?? 'x'} ก้อน`"
+                  />
+                </n-form-item>
+              </n-form>
+            </n-space>
+            มีจำนวนคู่หินที่มีสีเดียวกันติดอยู่ <n-text type="info">{{ one.answer }}</n-text> คู่
+          </n-card>
         </div>
       </n-collapse-item>
     </n-collapse>
@@ -94,7 +134,16 @@
   })
 
   const oneForm = ref(null)
+  const twoForm = ref(null)
+  const threeForm = ref(null)
 
+  const toCommaNumber = (number) => {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+  }
+
+  /**
+   * 1.1 มีหินอยู่จำนวน N ก้อน แต่ละก้อนสามารถเป็นสีแดง R เขียว G หรือน้ำเงิน B หากนำหินทั้งหมดไปสุ่มวางเรียงกันเป็นแถวเดียว จงหาจำนวนของคู่หินที่มีสีเดียวกันและอยู่ติดกัน
+   */
   const findOneAnswer = () => {
     const { rockCount, rockChar } = one.formValue
     let totalEven = 0
@@ -165,6 +214,57 @@
   watch([one.formValue], ([oldCount, newCount]) => {
     findOneAnswer()
   })
+
+  /**
+   * 1.2 ประเทศ XYZ มีธนบัตรทั้งหมดอยู่ 5 ชนิดคือ 1, 5, 10, 20 และ 100 ลุงพรชัยมีเงินอยู่ในธนาคาร N บาท หากถอนเงินออกมาทั้งหมดจะได้ธนบัตรจำนวนน้อยที่สุดจำนวนเท่าไร
+   */
+
+  const findTwoAnswer = () => {
+    const { moneyAmount } = two.formValue
+    let cashCount = 0
+    let moneyLeft = moneyAmount
+    let cashTypes = [100, 20, 10, 5, 1]
+
+    cashTypes.map((cashType) => {
+      let divMoney = Math.floor(moneyLeft / cashType)
+      cashCount += divMoney
+      moneyLeft = moneyLeft - cashType * divMoney
+    })
+
+    two.answer.value = cashCount
+  }
+
+  const two = {
+    twoForm,
+    formValue: reactive({
+      moneyAmount: 0,
+    }),
+    rules: {
+      moneyAmount: {
+        message: 'กรุณาใส่จำนวนเงิน',
+        trigger: ['blur', 'input', 'change'],
+        validator: (rule, value) => {
+          return value >= 1
+        },
+      },
+    },
+    answer: ref(0),
+    handleSubmitOne(e) {
+      e.preventDefault()
+      one.oneForm.value.validate((errors) => {
+        console.log(errors)
+        if (!errors) {
+          console.log(errors)
+        } else {
+          console.log(errors)
+        }
+      })
+    },
+  }
+
+  watch([two.formValue], ([oldCount, newCount]) => {
+    findTwoAnswer()
+  })
 </script>
 
 <style>
@@ -180,5 +280,6 @@
   .item-FK1RYbfX {
     max-width: 600px;
     margin: 0 auto;
+    padding-bottom: 20px;
   }
 </style>
