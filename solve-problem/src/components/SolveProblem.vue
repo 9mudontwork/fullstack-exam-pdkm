@@ -1,7 +1,7 @@
 <template>
   <n-config-provider :theme="darkTheme" class="item-FK1RYbfX">
     <!-- :default-expanded-names="['1', '2', '3']" -->
-    <n-collapse :default-expanded-names="['3']">
+    <n-collapse>
       <!-- ===== 1 ===== -->
       <n-collapse-item title="ข้อ 1.1" name="1">
         <div>
@@ -96,7 +96,9 @@
               </n-form>
             </n-space>
             จำนวนท่อนไม้ทั้งหมดที่ตัดได้
-            <n-text type="info">{{ three.answer.value.count }} ท่อน โดยมี {{ three.answer.value.type }}</n-text>
+            <n-text type="info"
+              >{{ three.answer.value.count }} ท่อน โดยมี {{ three.answer.value.type }}</n-text
+            >
           </n-card>
         </div>
       </n-collapse-item>
