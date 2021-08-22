@@ -90,9 +90,13 @@
                     placeholder="ใส่ข้อมูลรูปแบบ N A B C"
                   />
                 </n-form-item>
+                <n-form-item>
+                  <n-button @click="findThreeAnswer">คลิกดูคำตอบ</n-button>
+                </n-form-item>
               </n-form>
             </n-space>
-            จำนวนท่อนไม้ทั้งหมดที่ตัดได้ <n-text type="info">{{ three.answer }}</n-text> ท่อน
+            จำนวนท่อนไม้ทั้งหมดที่ตัดได้
+            <n-text type="info">{{ three.answer.value.count }} ท่อน โดยมี {{ three.answer.value.type }}</n-text>
           </n-card>
         </div>
       </n-collapse-item>
@@ -251,76 +255,90 @@
    * 2
    */
 
+  // const threeAnswerCount = () => {
+  //   return three.answer.value.count
+  // }
+
   const findThreeAnswer = () => {
-    // const { timberData } = three.formValue
+    threeForm.value.validate((errors) => {
+      if (errors) {
+        return false
+      } else {
+        const { timberData } = three.formValue
 
-    let defaultTimberData = [5, 2, 2, 2]
-    // let defaultTimberData = [3921, 17, 298, 107]
-    let defaultN = defaultTimberData[0]
-    let timberCount = 0
+        let timberDatas = timberData.split(' ')
+        let N = parseInt(timberDatas[0])
 
-    defaultTimberData.shift()
-    defaultTimberData.sort((a, b) => a - b)
+        timberDatas.shift()
+        timberDatas.sort()
 
-    let loopCount = 0
+        let A = parseInt(timberDatas[0])
+        let B = parseInt(timberDatas[1])
+        let C = parseInt(timberDatas[2])
 
-    const calculateTimber = (timberData, N, timberCount) => {
-      loopCount += 1
+        let collection = []
+        let piece = 0
 
-      let NLeft = N
-      let A = timberData[0]
-      let B = timberData[1]
+        const findTimber = () => {
+          for (let x = 0; x <= N; x++) {
+            for (let y = 0; y <= N; y++) {
+              if (N - A * x - B * y == piece) {
+                // console.log(`ท่อนที่ยาว ${A}, ${B}`)
+                // console.log(`ได้ ${x + y} ท่อน`)
+                collection.push({
+                  count: x + y,
+                  type: `ท่อนที่ยาว ${A} กับ ${B}`,
+                })
+              }
 
-      console.log(`${loopCount} - เหลือ ${NLeft} ท่อน`)
-      console.log(`${loopCount} - ลองหารหาเศษด้วย ${A} เหลือเศษ ${NLeft % A} ท่อน`)
+              if (N - A * x - C * y == piece) {
+                // console.log(`ท่อนที่ยาว ${A}, ${C}`)
+                // console.log(`ได้ ${x + y} ท่อน`)
+                collection.push({
+                  count: x + y,
+                  type: `ท่อนที่ยาว ${A} กับ ${C}`,
+                })
+              }
 
-      //   ถ้าเหลือ
-      if (NLeft % A != 0) {
-        console.log(`${loopCount} - เหลือ ${NLeft} ท่อน ลบ ${B} ออก 1 ท่อน`)
+              if (N - B * x - C * y == piece) {
+                // console.log(`ท่อนที่ยาว ${B}, ${C}`)
+                // console.log(`ได้ ${x + y} ท่อน`)
+                collection.push({
+                  count: x + y,
+                  type: `ท่อนที่ยาว ${B} กับ ${C}`,
+                })
+              }
+            }
+          }
 
-        timberCount += 1
-        console.log(`${loopCount} - ตอนนี้มี ${B} อยู่ ${timberCount} ท่อน`)
+          console.log(collection.length)
+          if (collection.length == 0) {
+            piece += 1
+            findTimber()
+          }
+        }
 
-        return calculateTimber(timberData, NLeft - B, timberCount)
+        findTimber()
+
+        function findMax(arr) {
+          let maxValue = Number.MIN_VALUE
+          let newArray = []
+
+          for (let i = 0; i < arr.length; i++) {
+            if (arr[i]?.count > maxValue) {
+              maxValue = arr[i].count
+              newArray = arr[i]
+            }
+          }
+          return newArray
+        }
+
+        let maxValue = findMax(collection)
+        // console.log(maxValue)
+
+        three.answer.value = maxValue
       }
-      // ถ้าไม่เหลือ
-      else {
-        console.log(
-          `${loopCount} - สุดท้ายไม่เหลือเศษแล้ว เอาที่เหลือ ${NLeft} ท่อน หารกับ ${A} ได้ ${
-            NLeft / A
-          } ท่อน แล้วบวก ${timberCount} ท่อน จาก ${B}`
-        )
-        return Math.floor(NLeft / A) + timberCount
-      }
-    }
-
-    // timberCount = calculateTimber(defaultTimberData, defaultN, timberCount)
-
-    three.answer.value = timberCount
-
-    // เอา comment consol.log ออกเฉยๆ
-    // let defaultTimberData = [3921, 17, 298, 107]
-    // let defaultN = defaultTimberData[0]
-    // let timberCount = 0
-
-    // defaultTimberData.shift()
-    // defaultTimberData.sort((a, b) => a - b)
-
-    // const calculateTimber = (timberData, N, timberCount) => {
-    //   let NLeft = N
-    //   let A = timberData[0]
-    //   let B = timberData[1]
-
-    //   if (NLeft % A != 0) {
-    //     timberCount += 1
-
-    //     return calculateTimber(timberData, NLeft - B, timberCount)
-    //   } else {
-    //     return Math.floor(NLeft / A) + timberCount
-    //   }
-    // }
-
-    // calculateTimber(defaultTimberData, defaultN, timberCount)
+    })
   }
 
   const three = {
