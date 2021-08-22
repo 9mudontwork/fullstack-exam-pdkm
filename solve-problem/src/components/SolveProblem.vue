@@ -96,7 +96,7 @@
               </n-form>
             </n-space>
             จำนวนท่อนไม้ทั้งหมดที่ตัดได้
-            <n-text type="info"
+            <n-text v-if="three.answer.value.count" type="info"
               >{{ three.answer.value.count }} ท่อน โดยมี {{ three.answer.value.type }}</n-text
             >
           </n-card>
