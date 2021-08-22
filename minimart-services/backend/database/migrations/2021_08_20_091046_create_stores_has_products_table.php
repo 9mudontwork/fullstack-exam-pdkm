@@ -14,9 +14,9 @@ class CreateStoresHasProductsTable extends Migration
     public function up()
     {
         Schema::create('stores_has_products', function (Blueprint $table) {
-            $table->integer('stores_id');
-            $table->integer('products_id');
-            $table->primary(['stores_id', 'products_id']);
+            $table->integer('store_id');
+            $table->integer('product_id');
+            $table->primary(['store_id', 'product_id']);
         });
     }
 
