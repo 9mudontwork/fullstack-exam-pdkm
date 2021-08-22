@@ -86,7 +86,7 @@
               <n-form :model="three.formValue" :rules="three.rules" ref="threeForm">
                 <n-form-item label="ใส่ข้อมูลรูปแบบ N A B C" path="timberData">
                   <n-input
-                    v-model:value="three.formValue.rockChar"
+                    v-model:value="three.formValue.timberData"
                     placeholder="ใส่ข้อมูลรูปแบบ N A B C"
                   />
                 </n-form-item>
@@ -294,7 +294,7 @@
       }
     }
 
-    timberCount = calculateTimber(defaultTimberData, defaultN, timberCount)
+    // timberCount = calculateTimber(defaultTimberData, defaultN, timberCount)
 
     three.answer.value = timberCount
 
@@ -326,22 +326,38 @@
   const three = {
     threeForm,
     formValue: reactive({
-      timberData: 0,
+      timberData: '',
     }),
     rules: {
-      timberData: {
-        message: 'กรุณาใส่จำนวนเงิน',
-        trigger: ['blur', 'input', 'change'],
-        validator: (rule, value) => {
-          return value >= 1
+      timberData: [
+        {
+          message: 'รูปแบบข้อมูลไม่ถูกต้อง Ex. 1 4000 4000 4000',
+          trigger: ['blur', 'input', 'change'],
+          validator: (rule, value) => {
+            let testValues = value.split(' ')
+            if (testValues.length == 4) {
+              let isNumber = true
+              testValues.map((testValue) => {
+                isNumber = !/[^0-9]/.test(testValue) ? true : false
+              })
+
+              if (isNumber) {
+                return testValues[0] >= 1
+                  ? testValues[1] <= 4000 && testValues[2] <= 4000 && testValues[3] <= 4000
+                  : false
+              }
+            }
+
+            return false
+          },
         },
-      },
+      ],
     },
     answer: ref(0),
   }
 
   watch([three.formValue], ([oldCount, newCount]) => {
-    findThreeAnswer()
+    // findThreeAnswer()
   })
 </script>
 
