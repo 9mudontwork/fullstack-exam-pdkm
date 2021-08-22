@@ -1,5 +1,7 @@
 # fullstack-exam-pdkm
 
+#### ไม่ได้ optimize และ ไม่ได้ refactor code
+
 ## ข้อ 1
 ### การรันโปรเจค
 โปรเจคจะอยู่ใน solve-problem
