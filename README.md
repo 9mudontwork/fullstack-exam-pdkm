@@ -11,6 +11,8 @@ npm install
 npm run dev
 ```
 
+หรือเข้าดูได้ที่ https://solve-problem-pdkm.vercel.app/
+
 
 ## ข้อ 2
 ### การรัน service
