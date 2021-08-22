@@ -21,7 +21,7 @@ npm run dev
 
 `php artisan key:generate`
 
-ตั้งค่าการเชื่อมต่อ database ให้ถูกต้อง (ใช้ mariadb หรือ mysql)
+สร้าง database เปล่า ๆ แล้วตั้งค่าการเชื่อมต่อ database ให้ถูกต้อง (ใช้ mariadb หรือ mysql)
 
 ```
 DB_CONNECTION=mysql<br>
