@@ -1,7 +1,7 @@
 <template>
   <n-config-provider :theme="darkTheme" class="item-FK1RYbfX">
     <!-- :default-expanded-names="['1', '2', '3']" -->
-    <n-collapse>
+    <n-collapse :default-expanded-names="['3']">
       <!-- ===== 1 ===== -->
       <n-collapse-item title="ข้อ 1.1" name="1">
         <div>
@@ -83,24 +83,16 @@
         <div>
           <n-card title="คำตอบ">
             <n-space vertical>
-              <n-form :model="one.formValue" :rules="one.rules" ref="oneForm">
-                <n-form-item label="จำนวนหิน" path="rockCount">
-                  <n-input-number
-                    v-model:value="one.formValue.rockCount"
-                    min="1"
-                    placeholder="ใส่จำนวนหิน"
-                  />
-                </n-form-item>
-
-                <n-form-item label="ใส่หิน R G B" path="rockChar">
+              <n-form :model="three.formValue" :rules="three.rules" ref="threeForm">
+                <n-form-item label="ใส่ข้อมูลรูปแบบ N A B C" path="timberData">
                   <n-input
-                    v-model:value="one.formValue.rockChar"
-                    :placeholder="`ใส่หิน ${one.formValue.rockCount ?? 'x'} ก้อน`"
+                    v-model:value="three.formValue.rockChar"
+                    placeholder="ใส่ข้อมูลรูปแบบ N A B C"
                   />
                 </n-form-item>
               </n-form>
             </n-space>
-            มีจำนวนคู่หินที่มีสีเดียวกันติดอยู่ <n-text type="info">{{ one.answer }}</n-text> คู่
+            จำนวนท่อนไม้ทั้งหมดที่ตัดได้ <n-text type="info">{{ three.answer }}</n-text> ท่อน
           </n-card>
         </div>
       </n-collapse-item>
@@ -198,17 +190,6 @@
       ],
     },
     answer: ref(0),
-    handleSubmitOne(e) {
-      e.preventDefault()
-      one.oneForm.value.validate((errors) => {
-        console.log(errors)
-        if (!errors) {
-          console.log(errors)
-        } else {
-          console.log(errors)
-        }
-      })
-    },
   }
 
   watch([one.formValue], ([oldCount, newCount]) => {
@@ -249,21 +230,118 @@
       },
     },
     answer: ref(0),
-    handleSubmitOne(e) {
-      e.preventDefault()
-      one.oneForm.value.validate((errors) => {
-        console.log(errors)
-        if (!errors) {
-          console.log(errors)
-        } else {
-          console.log(errors)
-        }
-      })
-    },
   }
 
   watch([two.formValue], ([oldCount, newCount]) => {
     findTwoAnswer()
+  })
+
+  // 1.3 * (Optional Test) ใช้ภาษาอะไรก็ได้เพื่อแก้ไขปัญหา
+
+  // กิ่งไม้มีความยาวเป็น N ต้องการตัดกิ่งไม้เป็นท่อนเล็กๆ ตามเงื่อนไขสองข้อดังต่อไปนี้:
+
+  // กิ่งไม้แต่ละท่อนต้องมีความยาว A, B หรือ C
+  // จำนวนท่อนไม้ควรมีมากที่สุด
+  // Input บรรทัดแรกจะเป็นค่า N A B C โดยที่ N คือ ความยาวของกิ่งไม้ (1 ≤ N) และ A, B, C คือความยาวของท่อนไม้ที่กำหนด (A, B, C ≤ 4000) Output แสดงจำนวนท่อนไม้ทั้งหมดที่ตัดได้
+
+  /**
+   * Input
+   * 5 5 3 2
+   * Output
+   * 2
+   */
+
+  const findThreeAnswer = () => {
+    // const { timberData } = three.formValue
+
+    let defaultTimberData = [5, 2, 2, 2]
+    // let defaultTimberData = [3921, 17, 298, 107]
+    let defaultN = defaultTimberData[0]
+    let timberCount = 0
+
+    defaultTimberData.shift()
+    defaultTimberData.sort((a, b) => a - b)
+
+    let loopCount = 0
+
+    const calculateTimber = (timberData, N, timberCount) => {
+      loopCount += 1
+
+      let NLeft = N
+      let A = timberData[0]
+      let B = timberData[1]
+
+      console.log(`${loopCount} - เหลือ ${NLeft} ท่อน`)
+      console.log(`${loopCount} - ลองหารหาเศษด้วย ${A} เหลือเศษ ${NLeft % A} ท่อน`)
+
+      //   ถ้าเหลือ
+      if (NLeft % A != 0) {
+        console.log(`${loopCount} - เหลือ ${NLeft} ท่อน ลบ ${B} ออก 1 ท่อน`)
+
+        timberCount += 1
+        console.log(`${loopCount} - ตอนนี้มี ${B} อยู่ ${timberCount} ท่อน`)
+
+        return calculateTimber(timberData, NLeft - B, timberCount)
+      }
+      // ถ้าไม่เหลือ
+      else {
+        console.log(
+          `${loopCount} - สุดท้ายไม่เหลือเศษแล้ว เอาที่เหลือ ${NLeft} ท่อน หารกับ ${A} ได้ ${
+            NLeft / A
+          } ท่อน แล้วบวก ${timberCount} ท่อน จาก ${B}`
+        )
+        return Math.floor(NLeft / A) + timberCount
+      }
+    }
+
+    timberCount = calculateTimber(defaultTimberData, defaultN, timberCount)
+
+    three.answer.value = timberCount
+
+    // เอา comment consol.log ออกเฉยๆ
+    // let defaultTimberData = [3921, 17, 298, 107]
+    // let defaultN = defaultTimberData[0]
+    // let timberCount = 0
+
+    // defaultTimberData.shift()
+    // defaultTimberData.sort((a, b) => a - b)
+
+    // const calculateTimber = (timberData, N, timberCount) => {
+    //   let NLeft = N
+    //   let A = timberData[0]
+    //   let B = timberData[1]
+
+    //   if (NLeft % A != 0) {
+    //     timberCount += 1
+
+    //     return calculateTimber(timberData, NLeft - B, timberCount)
+    //   } else {
+    //     return Math.floor(NLeft / A) + timberCount
+    //   }
+    // }
+
+    // calculateTimber(defaultTimberData, defaultN, timberCount)
+  }
+
+  const three = {
+    threeForm,
+    formValue: reactive({
+      timberData: 0,
+    }),
+    rules: {
+      timberData: {
+        message: 'กรุณาใส่จำนวนเงิน',
+        trigger: ['blur', 'input', 'change'],
+        validator: (rule, value) => {
+          return value >= 1
+        },
+      },
+    },
+    answer: ref(0),
+  }
+
+  watch([three.formValue], ([oldCount, newCount]) => {
+    findThreeAnswer()
   })
 </script>
 
