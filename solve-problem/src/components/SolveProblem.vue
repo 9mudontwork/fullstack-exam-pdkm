@@ -357,8 +357,9 @@
             let testValues = value.split(' ')
             if (testValues.length == 4) {
               let isNumber = true
-              testValues.map((testValue) => {
+              testValues.map((testValue, index) => {
                 isNumber = !/[^0-9]/.test(testValue) ? true : false
+                isNumber = isNaN(parseInt(testValue)) ? false : true
               })
 
               if (isNumber) {
