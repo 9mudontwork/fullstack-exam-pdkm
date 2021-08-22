@@ -10,14 +10,16 @@
 
 APP_KEY=
 
-ตั้งค่าการเชื่อมต่อ database ห้ถูกต้อง (ใช้ mariadb หรือ mysql)
+ตั้งค่าการเชื่อมต่อ database ให้ถูกต้อง (ใช้ mariadb หรือ mysql)
 
-DB_CONNECTION=mysql
+```
+DB_CONNECTION=mysql<br>
 DB_HOST=127.0.0.1
 DB_PORT=3306
 DB_DATABASE=laravel
 DB_USERNAME=root
 DB_PASSWORD=
+```
 
 จากนั้นรันคำสั่ง เพื่อน generate ข้อมูล
 `php artisan db:seed`
